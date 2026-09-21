@@ -1,8 +1,6 @@
-# RIDAC: Real-Time Industrial Defect Detection and Classification
+# Class-Conditioned-Industrial-Defect-Detection-Using-YOLO11-and-MobileNetV3
 
-> **Inspect. Segment. Classify.**
-
-RIDAC is a two-stage industrial visual-inspection system:
+This is is a two-stage industrial visual-inspection system:
 
 1. **YOLO11 instance segmentation** identifies and isolates manufactured objects.
 2. A **class-conditioned MobileNetV3 classifier** labels every segmented object as **normal** or **defective**.
@@ -24,7 +22,7 @@ The final pipeline processed 360 images with the following recorded model-infere
 
 The benchmark was recorded after model warm-up, excluding model loading and ZIP decoding. The project workstation contains an **NVIDIA RTX 6000 Ada Generation (48 GB)** GPU. End-to-end application time can vary with image dimensions, detected-object count, storage speed, CUDA/PyTorch versions, and hardware.
 
-![RIDAC Gradio application](assets/screenshots/gradio_application.png)
+![ Gradio application](assets/screenshots/gradio_application.png)
 
 The screenshot is a documentation render of the implemented Gradio layout populated only with the recorded 360-image benchmark values. Per-image prediction rows are intentionally omitted; the running application fills them from actual inference.
 
@@ -51,7 +49,7 @@ Exact machine-readable results are available in [`results/classification/model_c
 
 ## Supported product classes
 
-RIDAC was developed on 12 VisA industrial object categories:
+This project was developed on 12 VisA industrial object categories:
 
 `candle`, `capsules`, `cashew`, `chewinggum`, `fryum`, `macaroni1`, `macaroni2`, `pcb1`, `pcb2`, `pcb3`, `pcb4`, and `pipe_fryum`.
 
@@ -59,7 +57,7 @@ RIDAC was developed on 12 VisA industrial object categories:
 
 ### Original source dataset
 
-RIDAC is based on the **Visual Anomaly (VisA) Dataset**, an industrial visual-anomaly detection and segmentation dataset introduced by Yang Zou, Jongheon Jeong, Latha Pemula, Dongqing Zhang, and Onkar Dabeer in the ECCV 2022 paper *SPot-the-Difference Self-Supervised Pre-training for Anomaly Detection and Segmentation*.
+This project is based on the **Visual Anomaly (VisA) Dataset**, an industrial visual-anomaly detection and segmentation dataset introduced by Yang Zou, Jongheon Jeong, Latha Pemula, Dongqing Zhang, and Onkar Dabeer in the ECCV 2022 paper *SPot-the-Difference Self-Supervised Pre-training for Anomaly Detection and Segmentation*.
 
 The original dataset was released by researchers affiliated with **AWS AI Labs** and **KAIST**. It contains:
 
@@ -86,10 +84,10 @@ Official sources:
 
 ### Dataset used by this project
 
-The data used in RIDAC should be understood as two related but distinct datasets:
+The data used in this project should be understood as two related but distinct datasets:
 
 1. **Original VisA data:** the source RGB images and anomaly masks obtained from the Visual Anomaly dataset.
-2. **RIDAC-derived Roboflow export:** a project-specific object-instance segmentation dataset created by selecting 15 normal and 15 anomalous source images from each of the 12 VisA categories, manually annotating object polygons in Roboflow, and applying the documented preprocessing and augmentations.
+2. **Roboflow export:** a project-specific object-instance segmentation dataset created by selecting 15 normal and 15 anomalous source images from each of the 12 VisA categories, manually annotating object polygons in Roboflow, and applying the documented preprocessing and augmentations.
 
 The derived annotation seed therefore contains:
 
@@ -101,7 +99,7 @@ Roboflow generated augmented train, validation, and test images from these sourc
 
 - [VisA Object Segmentation v3 on Roboflow Universe](https://universe.roboflow.com/deeps-workspace-6tscj/visa_object_segmentation/dataset/3)
 
-The Roboflow export is not a replacement for the complete original VisA dataset. It is a derived segmentation dataset prepared specifically for training RIDAC’s YOLO11 object-segmentation stage.
+The Roboflow export is not a replacement for the complete original VisA dataset. It is a derived segmentation dataset prepared specifically for training This project YOLO11 object-segmentation stage.
 
 ### Normal and defective examples
 
@@ -407,84 +405,12 @@ The Gradio application:
 - Exports a final per-image CSV report.
 - Validates archive type, image size, total uncompressed size, and supported formats.
 
-## Quick start
 
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/YOUR_USERNAME/RIDAC-Industrial-Defect-Inspection.git
-cd RIDAC-Industrial-Defect-Inspection
-```
-
-### 2. Create an environment
-
-Python 3.10 or 3.11 is recommended.
-
-```bash
-python -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-pip install -r requirements.txt
-```
-
-For GPU inference, install the PyTorch build matching your CUDA environment before installing the remaining requirements.
-
-### 3. Run the application
-
-```bash
-python app.py
-```
-
-Open:
-
-```text
-http://127.0.0.1:7860
-```
-
-Optional arguments:
-
-```bash
-python app.py \
-  --host 0.0.0.0 \
-  --port 7860 \
-  --yolo models/yolo11_seg_best.pt \
-  --mobilenet models/mobilenet_v3_best.pt
-```
-
-To create a temporary public Gradio link:
-
-```bash
-python app.py --share
-```
-
-## Input and output
-
-### Input
-
-Upload one ZIP file containing images in any nested folder structure.
-
-Supported extensions:
-
-```text
-.jpg .jpeg .png .bmp .webp .tif .tiff
-```
-
-### Output
-
-The application provides:
-
-- A live annotated preview.
-- Image-level `NORMAL`, `DEFECTIVE`, `NO OBJECTS`, or `ERROR` status.
-- Detected-object and defective-object counts.
-- Predicted product classes.
-- Maximum defect probability.
-- YOLO, MobileNetV3, and combined inference time.
-- A downloadable CSV report.
 
 ## Repository structure
 
 ```text
-RIDAC-Industrial-Defect-Inspection/
+Class-Conditioned-Industrial-Defect-Detection-Using-YOLO11-and-MobileNetV3/
 ├── app.py
 ├── models/
 │   ├── yolo11_seg_best.pt
@@ -550,7 +476,7 @@ The component times do not have to sum exactly to combined inference because cro
 
 ## Limitations
 
-- RIDAC currently supports the 12 product classes used during YOLO and classifier training.
+- this project currently supports the 12 product classes used during YOLO and classifier training.
 - A missed YOLO object cannot be recovered by the classifier.
 - The classifier depends on the YOLO-predicted product class.
 - Rare-defect recall remains the most important improvement target, particularly for PCB3.
@@ -572,7 +498,7 @@ The component times do not have to sum exactly to combined inference because cro
 
 ### Required citation
 
-If you use RIDAC, the included example images, or the VisA-derived data preparation workflow in academic work, cite the original VisA publication:
+If you use this project, the included example images, or the VisA-derived data preparation workflow in academic work, cite the original VisA publication:
 
 > Y. Zou, J. Jeong, L. Pemula, D. Zhang, and O. Dabeer, “SPot-the-Difference Self-Supervised Pre-training for Anomaly Detection and Segmentation,” in *Computer Vision – ECCV 2022*, Lecture Notes in Computer Science, vol. 13690, Springer, Cham, 2022, pp. 392–408. doi: [10.1007/978-3-031-20056-4_23](https://doi.org/10.1007/978-3-031-20056-4_23).
 
@@ -616,13 +542,3 @@ When referring specifically to the downloaded dataset, the AWS Registry of Open 
 - Dataset licensing is separate from this repository’s source-code license.
 - The full VisA dataset is not redistributed in this repository. Only a small number of attributed examples, trained checkpoints, plots, and derived project artifacts are included.
 - Anyone redistributing additional VisA images or derived annotations should preserve the original attribution, identify the derivative nature of the work, and comply with the [CC BY 4.0 license](https://creativecommons.org/licenses/by/4.0/).
-- RIDAC source code is licensed under the [MIT License](LICENSE).
-
-## Author
-
-**Deep Manish Bhatt**
-
-- GitHub: [deepmbhatt](https://github.com/deepmbhatt)
-- Email: deepmanishbhatt@gmail.com
-
-Contributions, reproducibility improvements, deployment optimizations, and additional industrial datasets are welcome.
